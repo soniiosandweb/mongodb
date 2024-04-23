@@ -5,7 +5,9 @@ module.exports = mongoose => {
         description: String,
         published: Boolean
       },
-      { timestamps: true }
+      { timestamps: true },
+      {collection: "tutorials"}
+
     );
   
     schema.method("toJSON", function() {

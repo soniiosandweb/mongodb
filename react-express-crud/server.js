@@ -19,6 +19,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 const db = require("./app/models");
 db.mongoose
   .connect(db.url, {
+    dbName: 'iaw_user',
     useNewUrlParser: true,
     useUnifiedTopology: true
   })

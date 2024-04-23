@@ -1,4 +1,7 @@
-import { CREATE_TUTORIAL } from "../actions/types";
+import { 
+    CREATE_TUTORIAL,
+    RETRIEVE_TUTORIAL
+} from "../actions/types";
 
 const initialState = [];
 
@@ -8,6 +11,9 @@ function tutorialReducer(tutorials = initialState, action){
     switch (type){
         case CREATE_TUTORIAL:
             return [...tutorials, payload];
+
+        case RETRIEVE_TUTORIAL:
+            return payload
 
         default:
             return tutorials;

@@ -1,5 +1,6 @@
 const db = require("../models");
 const Tutorial = db.tutorials;
+const mongoose = require('mongoose');
 
 // Create and Save a new Tutorial
 exports.create = (req, res) => {
@@ -32,11 +33,11 @@ exports.create = (req, res) => {
   };
   
   // Retrieve all Tutorials from the database.
-  exports.findAll = (req, res) => {
+  exports.find = (req, res) => {
     const title = req.query.title;
     var condition = title ? { title: { [Op.like]: `%${title}%` } } : null;
   
-    Tutorial.findAll({ where: condition })
+    Tutorial.find({ where: condition })
       .then(data => {
         res.send(data);
       })
@@ -50,9 +51,9 @@ exports.create = (req, res) => {
   
   // Find a single Tutorial with an id
   exports.findOne = (req, res) => {
-    const id = req.params.id;
-  
-    Tutorial.findByPk(id)
+    const id = new mongoose.Types.ObjectId(req.params.id); 
+
+    Tutorial.findOne(id)
       .then(data => {
         if (data) {
           res.send(data);

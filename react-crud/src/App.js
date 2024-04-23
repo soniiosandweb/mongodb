@@ -5,6 +5,7 @@ import { Routes, Route, Link } from "react-router-dom";
 
 import AddTutorial from "./components/add-tutorial.component";
 import TutorialsList from './components/tutorials-list.component';
+import Tutorial from './components/tutorial.component';
 
 function App() {
   return (
@@ -32,6 +33,7 @@ function App() {
               <Route path="/" element={<TutorialsList/>} />
               <Route path="/tutorials" element={<TutorialsList/>} />
               <Route path="/add" element={<AddTutorial/>} />
+              <Route path='/tutorials/:id' element={<Tutorial />} />
             </Routes>
           
         </div>
