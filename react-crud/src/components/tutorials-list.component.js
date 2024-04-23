@@ -22,7 +22,8 @@ function TutorialsList(){
     
     useEffect(()=>{
         dispatch(retrieveTutorial())
-    })
+    }, [dispatch]);
+    
     return (
         <div className="list container">
             <div className="row">
