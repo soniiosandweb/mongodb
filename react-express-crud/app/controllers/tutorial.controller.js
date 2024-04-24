@@ -72,13 +72,20 @@ exports.create = (req, res) => {
   
   // Update a Tutorial by the id in the request
   exports.update = (req, res) => {
-    const id = req.params.id;
+    const id = new mongoose.Types.ObjectId(req.params.id);
+    const filter = { _id: id };
+
+    const updatedDoc = {
+      $set: {
+        title: req.body.title,
+        description: req.body.description,
+        published: req.body.published ? req.body.published : false
+      },
+    }
   
-    Tutorial.update(req.body, {
-      where: { id: id }
-    })
+    Tutorial.updateOne(filter, updatedDoc)
       .then(num => {
-        if (num == 1) {
+        if (num['modifiedCount'] == 1) {
           res.send({
             message: "Tutorial was updated successfully."
           });
@@ -97,13 +104,13 @@ exports.create = (req, res) => {
   
   // Delete a Tutorial with the specified id in the request
   exports.delete = (req, res) => {
-    const id = req.params.id;
+    const id = new mongoose.Types.ObjectId(req.params.id);
+
+    const filter = { _id: id };
   
-    Tutorial.destroy({
-      where: { id: id }
-    })
+    Tutorial.deleteOne(filter)
       .then(num => {
-        if (num == 1) {
+        if (num['deletedCount'] == 1) {
           res.send({
             message: "Tutorial was deleted successfully!"
           });

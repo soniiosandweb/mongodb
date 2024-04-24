@@ -1,13 +1,16 @@
 import { 
     CREATE_TUTORIAL,
-    RETRIEVE_TUTORIAL
+    RETRIEVE_TUTORIAL,
+    GET_TUTORIAL,
+    UPDATE_TUTORIAL,
+    DELETE_TUTORIAL
 } from "./types";
 
 import TutorialDataService from '../services/tutorial.service';
 
-export const createTutorial = (title, description) => async (dispatch) =>{
+export const createTutorial = (data) => async (dispatch) =>{
     try{
-        const res = await TutorialDataService.create({title, description});
+        const res = await TutorialDataService.create(data);
         dispatch({
             type: CREATE_TUTORIAL,
             payload: res.data
@@ -25,6 +28,48 @@ export const retrieveTutorial = () => async (dispatch) =>{
         dispatch({
             type: RETRIEVE_TUTORIAL,
             payload: res.data
+        })
+    }
+    catch(err){
+        console.log(err);
+    }
+}
+
+export const getTutorial = (id) => async (dispatch) => {
+    try{
+        const res = await TutorialDataService.get(id);
+        dispatch({
+            type : GET_TUTORIAL,
+            payload: res.data
+        })
+    }
+    catch(err){
+        console.log(err);
+    }
+}
+
+export const updateTutorial = (id, data) => async (dispatch) => {
+    try{
+        const res = await TutorialDataService.update(id, data);
+        // console.log(res.data)
+        dispatch({
+            type : UPDATE_TUTORIAL,
+            payload : data
+        })
+        
+       return Promise.resolve(res.data);
+    }
+    catch(err){
+        return Promise.reject(err);
+    }
+}
+
+export const deleteTutorial = (id) => async (dispatch) => {
+    try{
+        await TutorialDataService.delete(id);
+        dispatch({
+            type : DELETE_TUTORIAL,
+            payload: id
         })
     }
     catch(err){

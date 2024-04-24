@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import TutorialDataService from "../services/tutorial.service";
+import { createTutorial } from "../actions/tutorials";
+import { useDispatch } from "react-redux";
 
 function AddTutorial(){
 
@@ -8,6 +9,8 @@ function AddTutorial(){
   const [description, setDescription] = useState("");
   const [published, setPublished] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+
+  const dispatch = useDispatch();
 
   const changeTitle = (e) =>{
     setTitle(e.target.value)
@@ -33,18 +36,18 @@ function AddTutorial(){
       description: description
     }
 
-    TutorialDataService.create(data)
-      .then(response => {
-        setId(response.data.id);
-        setTitle(response.data.title);
-        setDescription(response.data.description);
-        setPublished(response.data.createdAt);
-        setSubmitted(true);
-        console.log(response.data);
-      })
-      .catch(e => {
-        console.log(e);
-      });
+    dispatch(createTutorial(data)).then(response => {
+      setId(response.id);
+      setTitle(response.title);
+      setDescription(response.description);
+      setPublished(response.createdAt);
+      setSubmitted(true);
+      console.log(response);
+    })
+    .catch((e) => {
+      console.log(e);
+    });
+
   }
 
   return(
@@ -85,10 +88,11 @@ function AddTutorial(){
                 name="description"
               />
             </div>
-
-            <button className="btn btn-success">
-              Submit
-            </button>
+            <div className="form-group">
+              <button className="btn btn-success" type="submit">
+                Submit
+              </button>
+            </div>
           </form>
       )
       }

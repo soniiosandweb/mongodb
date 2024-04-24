@@ -7,7 +7,7 @@ function TutorialsList(){
     const dispatch = useDispatch();
     const [currentIndex, setCurrentIndex] = useState(-1);
     const [currentTutotial, setCurrentTutorial] = useState(null);
-    const tutorialList = useSelector((tutorials) => tutorials.tutorials);
+    const {tutorialItems} = useSelector((state) => state.tutorials);
 
     const setActiveTutorial = (tutorial, index) =>{
         if(currentIndex === index){
@@ -30,7 +30,7 @@ function TutorialsList(){
                 <div className="col-md-6">
                     <h2>Tutorials List</h2>
                     <ul className="list-group">
-                        {tutorialList.map((tutorial, index) => (
+                        {tutorialItems.map((tutorial, index) => (
                             <li key={index} className={"list-group-item " + (currentIndex === index ? "active" : "")} onClick={()=>setActiveTutorial(tutorial, index)}>{tutorial.title}</li>
                         ))}
                     </ul>
@@ -39,19 +39,19 @@ function TutorialsList(){
                     <h2>Tutorial</h2>
                     {currentTutotial ? (
                         <div>
-                            <div className="mt-2">
+                            <div className="margin-top">
                                 <label style={{paddingRight: "5px"}}><strong>Title:</strong></label>
                                 {currentTutotial.title}
                             </div>
-                            <div className="mt-2">
+                            <div className="margin-top">
                                 <label style={{paddingRight: "5px"}}><strong>Description:</strong></label>
                                 {currentTutotial.description}
                             </div>
-                            <div className="mt-2">
+                            <div className="margin-top">
                                 <label style={{paddingRight: "5px"}}><strong>Status:</strong></label>
                                 {currentTutotial.published ? "Published" : "Pending"}
                             </div>
-                            <div className="mt-2">
+                            <div className="margin-top">
                                 <a href={"/tutorials/"+currentTutotial.id} className="btn btn-warning">Edit</a>
                             </div>
                         </div>
