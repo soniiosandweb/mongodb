@@ -6,7 +6,7 @@ class TutorialDataService{
         return http.get("/tutorials");
     }
 
-    get(id){
+    getOne(id){
         return http.get(`/tutorials/${id}`);
     }
 
@@ -20,6 +20,14 @@ class TutorialDataService{
 
     delete(id){
         return http.delete(`/tutorials/${id}`);
+    }
+
+    deleteAll(){
+        return http.delete("/tutorials");
+    }
+
+    findByTitle(title){
+        return http.get(`/tutorials/?title=${title}`);
     }
 }
 

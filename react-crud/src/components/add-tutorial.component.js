@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { createTutorial } from "../actions/tutorials";
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 function AddTutorial(){
 
@@ -11,6 +12,7 @@ function AddTutorial(){
   const [submitted, setSubmitted] = useState(false);
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const changeTitle = (e) =>{
     setTitle(e.target.value)
@@ -57,8 +59,11 @@ function AddTutorial(){
           <h4>You submitted successfully!</h4>
           <p>Record ID: {id}</p>
           <p>Submitted on {published}</p>
-          <button className="btn btn-success" onClick={newTutorial}>
+          <button className="btn btn-success btn-space" onClick={newTutorial}>
             Add
+          </button>
+          <button className="btn btn-warning btn-space" onClick={() => navigate('/')}>
+            Back
           </button>
         </div>
       ) : (
@@ -94,7 +99,7 @@ function AddTutorial(){
               </button>
             </div>
           </form>
-      )
+        )
       }
     </div>
   )

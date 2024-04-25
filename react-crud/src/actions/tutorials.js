@@ -3,7 +3,8 @@ import {
     RETRIEVE_TUTORIAL,
     GET_TUTORIAL,
     UPDATE_TUTORIAL,
-    DELETE_TUTORIAL
+    DELETE_TUTORIAL,
+    DELETE_ALL_TUTORIALS
 } from "./types";
 
 import TutorialDataService from '../services/tutorial.service';
@@ -37,7 +38,7 @@ export const retrieveTutorial = () => async (dispatch) =>{
 
 export const getTutorial = (id) => async (dispatch) => {
     try{
-        const res = await TutorialDataService.get(id);
+        const res = await TutorialDataService.getOne(id);
         dispatch({
             type : GET_TUTORIAL,
             payload: res.data
@@ -50,14 +51,14 @@ export const getTutorial = (id) => async (dispatch) => {
 
 export const updateTutorial = (id, data) => async (dispatch) => {
     try{
-        const res = await TutorialDataService.update(id, data);
+        await TutorialDataService.update(id, data);
         // console.log(res.data)
         dispatch({
             type : UPDATE_TUTORIAL,
             payload : data
         })
         
-       return Promise.resolve(res.data);
+       return Promise.resolve(data);
     }
     catch(err){
         return Promise.reject(err);
@@ -74,5 +75,31 @@ export const deleteTutorial = (id) => async (dispatch) => {
     }
     catch(err){
         console.log(err);
+    }
+}
+
+export const deleteAllTutorials = () => async (dispatch) => {
+    try{
+        const res = await TutorialDataService.deleteAll();
+        dispatch({
+            type : DELETE_ALL_TUTORIALS,
+            payload : res.data
+        })
+    }
+    catch(err){
+        console.log(err);
+    }
+}
+
+export const filterTutorialByTitle = (title) => async (dispatch) => {
+    try{
+        const res = await TutorialDataService.findByTitle(title);
+        dispatch({
+            type : RETRIEVE_TUTORIAL,
+            payload : res.data
+        })
+    }
+    catch(err){
+        console.log(err)
     }
 }

@@ -35,9 +35,9 @@ exports.create = (req, res) => {
   // Retrieve all Tutorials from the database.
   exports.find = (req, res) => {
     const title = req.query.title;
-    var condition = title ? { title: { [Op.like]: `%${title}%` } } : null;
+    var condition = title ? { title: new RegExp(title, 'i') } : null;
   
-    Tutorial.find({ where: condition })
+    Tutorial.find(condition)
       .then(data => {
         res.send(data);
       })
@@ -129,10 +129,9 @@ exports.create = (req, res) => {
   
   // Delete all Tutorials from the database.
   exports.deleteAll = (req, res) => {
-    Tutorial.destroy({
-      where: {},
-      truncate: false
-    })
+
+    const filter = {};
+    Tutorial.deleteMany(filter)
       .then(nums => {
         res.send({ message: `${nums} Tutorials were deleted successfully!` });
       })

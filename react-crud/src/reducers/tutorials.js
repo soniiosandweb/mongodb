@@ -3,7 +3,8 @@ import {
     RETRIEVE_TUTORIAL,
     GET_TUTORIAL,
     UPDATE_TUTORIAL,
-    DELETE_TUTORIAL
+    DELETE_TUTORIAL,
+    DELETE_ALL_TUTORIALS
 } from "../actions/types";
 
 const initialState = {
@@ -18,7 +19,7 @@ function tutorialReducer(state = initialState, action){
         case CREATE_TUTORIAL:
             return {
                 ...state,
-                tutorialItems: payload
+                tutorialItems: [payload, ...state.tutorialItems]
             }
 
         case RETRIEVE_TUTORIAL:
@@ -31,13 +32,13 @@ function tutorialReducer(state = initialState, action){
             return {
                 ...state,
                 tutorialItem: payload
-            };
+            }
 
         case UPDATE_TUTORIAL:
             return {
                 ...state,
                 tutorialItems: state.tutorialItems.map((post) =>
-                    post.id === action.payload.id ? action.payload : post
+                    post.id === payload.id ? payload : post
                 )
             }
         
@@ -46,6 +47,12 @@ function tutorialReducer(state = initialState, action){
                 ...state,
                 tutorialItems: state.tutorialItems.filter((tutorialItems) => tutorialItems.id !== payload.id)
             }
+
+        case DELETE_ALL_TUTORIALS:
+            return {
+                tutorialItems: []
+            }
+
         default:
             return state;
     }
