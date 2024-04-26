@@ -9,7 +9,7 @@ import {
 
 const initialState = {
     tutorialItems: [],
-    tutorialItem: []
+    tutorialData: []
 };
 
 function tutorialReducer(state = initialState, action){
@@ -31,7 +31,7 @@ function tutorialReducer(state = initialState, action){
         case GET_TUTORIAL:
             return {
                 ...state,
-                tutorialItem: payload
+                tutorialData: payload
             }
 
         case UPDATE_TUTORIAL:

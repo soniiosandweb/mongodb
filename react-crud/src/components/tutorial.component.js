@@ -13,7 +13,7 @@ function Tutorial(){
     const [description, setDescription] = useState('');
     const [success, setSuccess] = useState(false);
 
-    const {tutorialItem} = useSelector((state) => state.tutorials);
+    const {tutorialData} = useSelector((state) => state.tutorials);
 
     const updateTutorialData = (event) => {
         if(event) event.preventDefault();
@@ -38,9 +38,9 @@ function Tutorial(){
 
     const publishTutorial = (status) => {
         var data = {
-            id: tutorialItem.id,
-            title: tutorialItem.title,
-            description: tutorialItem.description,
+            id: tutorialData.id,
+            title: tutorialData.title,
+            description: tutorialData.description,
             published: status
         }
 
@@ -67,12 +67,14 @@ function Tutorial(){
     }
     
     useEffect(()=>{
-        dispatch(getTutorial(id));
+        dispatch(getTutorial(id)).then(response => {
+            console.log(response)
+        })
     }, [dispatch, id])
 
     return(
         <>
-            {tutorialItem ? 
+            {tutorialData ? 
             (
                 <div>
                     <h2>Tutorial</h2>
@@ -84,7 +86,7 @@ function Tutorial(){
                                 className="form-control"
                                 id="title"
                                 name="title"
-                                value={title ? title : tutorialItem.title}
+                                value={title ? title : tutorialData.title}
                                 required
                                 onChange={(e) => setTitle(e.target.value)}
                             />
@@ -96,16 +98,16 @@ function Tutorial(){
                                 className="form-control"
                                 id="description"
                                 name="description"
-                                value={description ? description : tutorialItem.description}
+                                value={description ? description : tutorialData.description}
                                 required
                                 onChange={(e) => setDescription(e.target.value)}
                             />
                         </div>
                         <div className="form-group">
-                            <strong>Status: </strong>{tutorialItem.published ? "Published" : "Pending"}
+                            <strong>Status: </strong>{tutorialData.published ? "Published" : "Pending"}
                         </div>
                         <div className="form-group">
-                            {tutorialItem.published ? 
+                            {tutorialData.published ? 
                                 (
                                     <button type="button" className="btn btn-primary btn-space" onClick={() => publishTutorial(false)}>UnPublish</button>
                                 ) : (
@@ -113,7 +115,7 @@ function Tutorial(){
                                 )
                             }
                             
-                            <button type="button" className="btn btn-danger btn-space" onClick={() => deleteTutorialData(tutorialItem.id)}>Delete</button>
+                            <button type="button" className="btn btn-danger btn-space" onClick={() => deleteTutorialData(tutorialData.id)}>Delete</button>
                             <button type="submit" className="btn btn-success btn-space" >Update</button>
                             <button type="button" className="btn btn-warning btn-space" onClick={() => navigate('/')}>Back</button>
                         </div>

@@ -38,6 +38,7 @@ export const retrieveTutorial = () => async (dispatch) =>{
 
 export const getTutorial = (id) => async (dispatch) => {
     try{
+
         const res = await TutorialDataService.getOne(id);
         dispatch({
             type : GET_TUTORIAL,
@@ -94,6 +95,19 @@ export const deleteAllTutorials = () => async (dispatch) => {
 export const filterTutorialByTitle = (title) => async (dispatch) => {
     try{
         const res = await TutorialDataService.findByTitle(title);
+        dispatch({
+            type : RETRIEVE_TUTORIAL,
+            payload : res.data
+        })
+    }
+    catch(err){
+        console.log(err)
+    }
+}
+
+export const filterPublishedTutorial = (value) => async (dispatch) => {
+    try {
+        const res = await TutorialDataService.filterPublished(value);
         dispatch({
             type : RETRIEVE_TUTORIAL,
             payload : res.data

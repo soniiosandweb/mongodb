@@ -6,8 +6,8 @@ class TutorialDataService{
         return http.get("/tutorials");
     }
 
-    getOne(id){
-        return http.get(`/tutorials/${id}`);
+    getOne(tutorialId){
+        return http.get(`/tutorials/${tutorialId ? tutorialId : ''}`);
     }
 
     create(data){
@@ -28,6 +28,10 @@ class TutorialDataService{
 
     findByTitle(title){
         return http.get(`/tutorials/?title=${title}`);
+    }
+
+    filterPublished(value){
+        return http.get(`/tutorials/published/?value=${value}`);
     }
 }
 

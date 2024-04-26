@@ -145,7 +145,10 @@ exports.create = (req, res) => {
   
   // find all published Tutorial
   exports.findAllPublished = (req, res) => {
-    Tutorial.findAll({ where: { published: true } })
+    const value = req.query.value;
+    var condition = value ? { published: value } : null;
+  
+    Tutorial.find(condition)
       .then(data => {
         res.send(data);
       })

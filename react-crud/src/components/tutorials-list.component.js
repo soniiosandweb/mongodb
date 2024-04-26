@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import {useDispatch, useSelector} from 'react-redux';
-import { deleteAllTutorials, filterTutorialByTitle, retrieveTutorial } from "../actions/tutorials";
+import { deleteAllTutorials, filterPublishedTutorial, filterTutorialByTitle, retrieveTutorial } from "../actions/tutorials";
 
 function TutorialsList(){
 
@@ -9,6 +9,7 @@ function TutorialsList(){
     const [currentTutotial, setCurrentTutorial] = useState(null);
     const {tutorialItems} = useSelector((state) => state.tutorials);
     const [searchTitle, setSearchTitle] = useState('');
+    const [selected, setSelected] = useState('');
 
     const setActiveTutorial = (tutorial, index) =>{
         if(currentIndex === index){
@@ -35,12 +36,38 @@ function TutorialsList(){
     const findByTitle = () => {
         dispatch(filterTutorialByTitle(searchTitle)).then(response => {
             // console.log(response);
+            setSelected('');
             setCurrentIndex(-1);
             setCurrentTutorial(null);
         })
         .catch(err => {
             console.log(err)
         })
+    }
+
+    const filterPublishedData = (e) => {
+        setSelected(e.target.value);
+        dispatch(filterPublishedTutorial(e.target.value)).then(response => {
+            setCurrentIndex(-1);
+            setCurrentTutorial(null);
+            setSearchTitle('');
+        })
+        .catch(err => {
+            console.log(err)
+        })
+    }
+
+    const resetFilter = () => {
+        dispatch(retrieveTutorial()).then(response =>{
+            setSelected('');
+            setSearchTitle('');
+            setCurrentIndex(-1);
+            setCurrentTutorial(null);
+        })
+        .catch(err => {
+            console.log(err)
+        })
+        
     }
     
     useEffect(()=>{
@@ -57,6 +84,7 @@ function TutorialsList(){
                             className="form-control"
                             placeholder="Search by title"
                             value={searchTitle}
+                            id="search_title"
                             onChange={(e) => setSearchTitle(e.target.value)}
                         />
                         <div className="input-group-append">
@@ -73,14 +101,27 @@ function TutorialsList(){
             </div>
             <div className="row">
                 <div className="col-md-6">
-                    <h2>Tutorials List</h2>
+                    <div className="input-group justify-content-between mb-3">
+                        <h2>Tutorial List</h2>
+                        <select 
+                            className="form-control-sm rounded" 
+                            value={selected} 
+                            onChange={(e) => filterPublishedData(e)}
+                            id="filter_published"
+                        >
+                            <option value="">Select Filter</option>
+                            <option value="true">Published</option>
+                            <option value="false">Pending</option>
+                        </select>
+                    </div>
                     <ul className="list-group">
                         {tutorialItems.map((tutorial, index) => (
                             <li key={index} className={"list-group-item " + (currentIndex === index ? "active" : "")} onClick={()=>setActiveTutorial(tutorial, index)}>{tutorial.title}</li>
                         ))}
                     </ul>
 
-                    <button className="margin-top btn btn-danger" onClick={() => deleteAllTutorialData()}>Delete All</button>
+                    <button className="margin-top btn btn-danger btn-space" onClick={() => deleteAllTutorialData()}>Delete All</button>
+                    <button className="btn btn-secondary btn-space margin-top" onClick={() => resetFilter()}>Clear All Filter</button>
                 </div>
                 <div className="col-md-6">
                     <h2>Tutorial</h2>
@@ -99,7 +140,7 @@ function TutorialsList(){
                                 {currentTutotial.published ? "Published" : "Pending"}
                             </div>
                             <div className="margin-top">
-                                <a href={"/tutorials/"+currentTutotial.id} className="btn btn-warning">Edit</a>
+                                <a href={"/#/tutorials/"+currentTutotial.id} className="btn btn-warning">Edit</a>
                             </div>
                         </div>
                     ) : (
