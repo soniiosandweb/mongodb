@@ -6,7 +6,7 @@ module.exports = (mongoose) => {
       published: Boolean,
     },
     { timestamps: true },
-    { collection: "tutorials" }
+    { collection: "todo_lists" }
   );
 
   schema.method("toJSON", function () {
@@ -15,6 +15,6 @@ module.exports = (mongoose) => {
     return object;
   });
 
-  const Tutorial = mongoose.model("tutorial", schema);
-  return Tutorial;
+  const TodoList = mongoose.model("todo_list", schema);
+  return TodoList;
 };

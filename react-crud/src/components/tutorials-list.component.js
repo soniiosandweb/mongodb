@@ -140,7 +140,7 @@ function TutorialsList(){
                                 {currentTutotial.published ? "Published" : "Pending"}
                             </div>
                             <div className="margin-top">
-                                <a href={"/#/tutorials/"+currentTutotial.id} className="btn btn-warning">Edit</a>
+                                <a href={"/tutorials/"+currentTutotial.id} className="btn btn-warning">Edit</a>
                             </div>
                         </div>
                     ) : (
