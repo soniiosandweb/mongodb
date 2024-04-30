@@ -8,6 +8,7 @@ import TutorialsList from './components/tutorials-list.component';
 import Tutorial from './components/tutorial.component';
 import HomePage from './components/home.component';
 import TodosList from './components/todos-list.component';
+import AddTodo from './components/add-todo.component';
 
 function App() {
   return (
@@ -22,10 +23,13 @@ function App() {
                 <Link to={"/tutorials"} className="nav-link">Tutorials</Link>
               </li>
               <li className="nav-item">
-                <Link to={"/todos"} className="nav-link">Todos</Link>
+                <Link to={"/add-tutorial"} className="nav-link">Add Tutorial</Link>
               </li>
               <li className="nav-item">
-                <Link to={"/add"} className="nav-link">Add Tutorial</Link>
+                <Link to={"/todos"} className="nav-link">Todos</Link>
+              </li>
+              <li className='nav-item'>
+                <Link to={"/add-todo"} className="nav-link">Add Todo</Link>
               </li>
             </div>
           </div>
@@ -35,9 +39,10 @@ function App() {
             <Routes>
               <Route path="/" element={<HomePage/>} />
               <Route path="/tutorials" element={<TutorialsList/>} />
-              <Route path="/add" element={<AddTutorial/>} />
+              <Route path="/add-tutorial" element={<AddTutorial/>} />
               <Route path='/tutorials/:id' element={<Tutorial />} />
               <Route path='/todos' element={<TodosList />} />
+              <Route path='/add-todo' element={<AddTodo />} />
             </Routes>
         </div>
       </div>

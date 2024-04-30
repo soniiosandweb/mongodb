@@ -6,5 +6,8 @@ module.exports = (app) => {
   // Todo List
   router.get("/", todoList.findTodo);
 
+  // Add Todo
+  router.post("/", todoList.addTodo);
+
   app.use("/api/todo-list", router);
 };

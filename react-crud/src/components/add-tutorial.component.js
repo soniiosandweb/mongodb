@@ -56,7 +56,7 @@ function AddTutorial(){
     <div className="submit-form">
       {submitted ? (
         <div>
-          <h4>You submitted successfully!</h4>
+          <h4>Tutorial submitted successfully!</h4>
           <p>Record ID: {id}</p>
           <p>Submitted on {published}</p>
           <button className="btn btn-success btn-space" onClick={newTutorial}>
