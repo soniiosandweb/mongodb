@@ -1,6 +1,7 @@
 import { 
     GET_ALL_TODO,
-    Add_TODO
+    Add_TODO,
+    GET_TODO
  } from './types';
 
 import TodoDataService from '../services/todo.service';
@@ -32,5 +33,19 @@ export const addTodoItemData = (data) => async (dispatch) => {
     catch(err){
         console.log(err);
         return Promise.reject(err);
+    }
+}
+
+export const getTodo = (id) => async (dispatch) => {
+    try{
+
+        const res = await TodoDataService.getOne(id);
+        dispatch({
+            type : GET_TODO,
+            payload: res.data
+        })
+    }
+    catch(err){
+        console.log(err);
     }
 }

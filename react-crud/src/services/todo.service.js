@@ -8,6 +8,10 @@ class TodoDataService{
     addTodoItem(data){
         return httpCommon.post("/todo-list",data)
     }
+
+    getOne(todoId){
+        return httpCommon.get(`/todo-list/${todoId ? todoId : ''}`);
+    }
 }
 
 export default new TodoDataService();

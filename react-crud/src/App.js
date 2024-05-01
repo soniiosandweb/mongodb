@@ -9,6 +9,7 @@ import Tutorial from './components/tutorial.component';
 import HomePage from './components/home.component';
 import TodosList from './components/todos-list.component';
 import AddTodo from './components/add-todo.component';
+import TodoPage from './components/todo.component';
 
 function App() {
   return (
@@ -43,6 +44,7 @@ function App() {
               <Route path='/tutorials/:id' element={<Tutorial />} />
               <Route path='/todos' element={<TodosList />} />
               <Route path='/add-todo' element={<AddTodo />} />
+              <Route path='/todos/:id' element={<TodoPage />} />
             </Routes>
         </div>
       </div>

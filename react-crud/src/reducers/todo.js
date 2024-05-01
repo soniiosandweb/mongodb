@@ -1,10 +1,12 @@
 import { 
     GET_ALL_TODO,
-    Add_TODO
+    Add_TODO,
+    GET_TODO
  } from "../actions/types";
 
 const initialState = {
-    todosItem : []
+    todosItem : [],
+    todoItem : []
 };
 
 function todoReducer( state = initialState, action){
@@ -22,6 +24,12 @@ function todoReducer( state = initialState, action){
             return {
                 ...state,
                 todosItem: [payload, ...state.todosItem]
+            }
+        
+        case GET_TODO:
+            return {
+                ...state,
+                todoItem: payload
             }
             
         default:

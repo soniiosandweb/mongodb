@@ -9,3 +9,4 @@ export const DELETE_ALL_TUTORIALS = "DELETE_ALL_TUTORIALS";
 // Todo types
 export const GET_ALL_TODO = "GET_ALL_TODO";
 export const Add_TODO = "ADD_TODO";
+export const GET_TODO = "GET_TODO";
