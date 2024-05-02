@@ -12,6 +12,14 @@ class TodoDataService{
     getOne(todoId){
         return httpCommon.get(`/todo-list/${todoId ? todoId : ''}`);
     }
+
+    updateTodo(id, data){
+        return httpCommon.put(`/todo-list/${id}`, data);
+    }
+
+    deleteTodo(id){
+        return httpCommon.delete(`/todo-list/${id}`)
+    }
 }
 
 export default new TodoDataService();

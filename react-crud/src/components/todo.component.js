@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getTodo } from "../actions/todo";
+import { deleteTodoItem, getTodo, updateTodoData } from "../actions/todo";
 
 function TodoPage(){
 
@@ -15,6 +15,38 @@ function TodoPage(){
 
     const {todoItem} = useSelector((state) => state.todos);
 
+    const updateTodoItem = (event) => {
+        if(event) event.preventDefault();
+
+        var data = {
+            id: id,
+            title: title,
+            description: description
+        }
+
+        dispatch(updateTodoData(id,data)).then(response => {
+            dispatch(getTodo(id));
+            setSuccess(true);
+            setTimeout(() => {
+                setSuccess(false)
+            }, 1000);
+        })
+        .catch(e => {
+            console.log(e);
+        })
+    }
+
+    const deleteTodoData = (id) =>{
+        dispatch(deleteTodoItem(id)).then(response => {
+            console.log(response)
+            navigate('/');
+        })
+        .catch((e) => {
+            console.log(e)
+        })
+    }
+
+
     useEffect(()=>{
         dispatch(getTodo(id)).then(response => {
             console.log(response)
@@ -24,11 +56,11 @@ function TodoPage(){
     return(
         <div>
 
-        {todoItem ? 
+            {todoItem ? 
             (
                 <div>
                     <h2>Tutorial</h2>
-                    <form >
+                    <form onSubmit={updateTodoItem}>
                         <div className="form-group">
                             <label htmlFor="title">Title</label>
                             <input 
@@ -56,6 +88,12 @@ function TodoPage(){
                         <div className="form-group">
                             <strong>Status: </strong>{todoItem.published ? "Published" : "Pending"}
                         </div>
+
+                        <div className="form-group">
+                            <button type="button" className="btn btn-danger btn-space" onClick={() => deleteTodoData(todoItem.id)}>Delete</button>
+                            <button className="btn btn-success btn-space" type="submit">Update</button>
+                            <button className="btn btn-warning btn-space" type="button" onClick={() => navigate("/")}>Back</button>
+                        </div>
                        
                         <div className="form-group">
                             {success ?
@@ -66,7 +104,7 @@ function TodoPage(){
                 </div>
             ) : (
                 <div>
-                    <p>Tutorial Not Found</p>
+                    <p>Todo Item Not Found</p>
                     <a href="/" className="btn btn-warning">Go Back</a>
                 </div>
             )}

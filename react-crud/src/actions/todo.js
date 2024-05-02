@@ -1,7 +1,9 @@
 import { 
     GET_ALL_TODO,
     Add_TODO,
-    GET_TODO
+    GET_TODO,
+    UPDATE_TODO,
+    DELETE_TODO
  } from './types';
 
 import TodoDataService from '../services/todo.service';
@@ -48,4 +50,34 @@ export const getTodo = (id) => async (dispatch) => {
     catch(err){
         console.log(err);
     }
+}
+
+export const updateTodoData = (id, data) => async (dispatch) => {
+    try {
+        const res = await TodoDataService.updateTodo(id,data);
+        dispatch({
+            type : UPDATE_TODO,
+            payload : res.data
+        })
+
+        return Promise.resolve(res.data);
+
+    } catch (error) {
+        console.log(error);
+        return Promise.reject(error);
+    }
+}
+
+export const deleteTodoItem = (id) => async (dispatch) => {
+
+    try {
+        const res = await TodoDataService.deleteTodo(id);
+        dispatch({
+            type : DELETE_TODO,
+            payload : res.data
+        })
+    } catch (error) {
+        console.log(error)
+    }
+    
 }

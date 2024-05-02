@@ -1,8 +1,10 @@
 import { 
     GET_ALL_TODO,
     Add_TODO,
-    GET_TODO
- } from "../actions/types";
+    GET_TODO,
+    UPDATE_TODO,
+    DELETE_TODO
+} from "../actions/types";
 
 const initialState = {
     todosItem : [],
@@ -30,6 +32,20 @@ function todoReducer( state = initialState, action){
             return {
                 ...state,
                 todoItem: payload
+            }
+
+        case UPDATE_TODO:
+            return {
+                ...state,
+                todosItem: state.todosItem.map((todo) =>
+                    todo.id === payload.id ? payload : todo
+                )
+            }
+
+        case DELETE_TODO:
+            return{
+                ...state,
+                todosItem: state.todosItem.filter((todosItem) => todosItem.id !== payload.id)
             }
             
         default:
