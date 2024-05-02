@@ -90,6 +90,13 @@ function TodoPage(){
                         </div>
 
                         <div className="form-group">
+                            {todoItem.published ? 
+                                (
+                                    <button type="button" className="btn btn-primary btn-space" >UnPublish</button>
+                                ) : (
+                                    <button type="button" className="btn btn-primary btn-space" >Publish</button>
+                                )
+                            }
                             <button type="button" className="btn btn-danger btn-space" onClick={() => deleteTodoData(todoItem.id)}>Delete</button>
                             <button className="btn btn-success btn-space" type="submit">Update</button>
                             <button className="btn btn-warning btn-space" type="button" onClick={() => navigate("/")}>Back</button>
