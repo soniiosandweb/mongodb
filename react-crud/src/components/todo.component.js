@@ -46,6 +46,26 @@ function TodoPage(){
         })
     }
 
+    const publishTodo = (status) => {
+        var data = {
+            id: todoItem.id,
+            title: todoItem.title,
+            description: todoItem.description,
+            published: status
+        }
+
+        dispatch(updateTodoData(id, data)).then(response => {
+            dispatch(getTodo(id));
+            setSuccess(true);
+            setTimeout(() => {
+                setSuccess(false);
+            }, 1000);
+        })
+        .catch((e) => {
+            console.log(e);
+        })
+    }
+
 
     useEffect(()=>{
         dispatch(getTodo(id)).then(response => {
@@ -90,16 +110,16 @@ function TodoPage(){
                         </div>
 
                         <div className="form-group">
+                            <button className="btn btn-primary btn-space" type="submit">Update</button>
+                            <button type="button" className="btn btn-danger btn-space" onClick={() => deleteTodoData(todoItem.id)}>Delete</button>
                             {todoItem.published ? 
                                 (
-                                    <button type="button" className="btn btn-primary btn-space" >UnPublish</button>
+                                    <button type="button" className="btn btn-secondary btn-space" onClick={()=>publishTodo(false)}>UnPublish</button>
                                 ) : (
-                                    <button type="button" className="btn btn-primary btn-space" >Publish</button>
+                                    <button type="button" className="btn btn-secondary btn-space" onClick={()=>publishTodo(true)}>Publish</button>
                                 )
                             }
-                            <button type="button" className="btn btn-danger btn-space" onClick={() => deleteTodoData(todoItem.id)}>Delete</button>
-                            <button className="btn btn-success btn-space" type="submit">Update</button>
-                            <button className="btn btn-warning btn-space" type="button" onClick={() => navigate("/")}>Back</button>
+                            <button className="btn btn-warning btn-space" type="button" onClick={() => navigate("/todos")}>Back</button>
                         </div>
                        
                         <div className="form-group">

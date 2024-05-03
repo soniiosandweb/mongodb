@@ -67,7 +67,6 @@ function TutorialsList(){
         .catch(err => {
             console.log(err)
         })
-        
     }
     
     useEffect(()=>{
@@ -115,13 +114,17 @@ function TutorialsList(){
                         </select>
                     </div>
                     <ul className="list-group">
-                        {tutorialItems.map((tutorial, index) => (
-                            <li key={index} className={"list-group-item " + (currentIndex === index ? "active" : "")} onClick={()=>setActiveTutorial(tutorial, index)}>{tutorial.title}</li>
-                        ))}
+                        {tutorialItems.length ?
+                            tutorialItems.map((tutorial, index) => (
+                                <li key={index} className={"list-group-item " + (currentIndex === index ? "active" : "")} onClick={()=>setActiveTutorial(tutorial, index)}>{tutorial.title}</li>
+                            ))
+                        :
+                            <li className="list-group-item">No Record Found</li>
+                        }
                     </ul>
 
-                    <button className="margin-top btn btn-danger btn-space" onClick={() => deleteAllTutorialData()}>Delete All</button>
-                    <button className="btn btn-secondary btn-space margin-top" onClick={() => resetFilter()}>Clear All Filter</button>
+                    <button className="mt-3 btn btn-danger btn-space" onClick={() => deleteAllTutorialData()}>Delete All</button>
+                    <button className="btn btn-secondary btn-space mt-3" onClick={() => resetFilter()}>Clear All Filter</button>
                 </div>
                 <div className="col-md-6">
                     <h2>Tutorial</h2>

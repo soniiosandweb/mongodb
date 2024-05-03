@@ -2,6 +2,10 @@ import http from '../http-common';
 
 class TutorialDataService{
 
+    getTutorialLimit(limit){
+        return http.get(`/tutorials/limit/${limit}`);
+    }
+
     getAll(){
         return http.get("/tutorials");
     }

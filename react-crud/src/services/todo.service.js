@@ -1,6 +1,11 @@
 import httpCommon from "../http-common";
 
 class TodoDataService{
+
+    getTodoLimit(limit){
+        return httpCommon.get(`/todo-list/limit/${limit}`)
+    }
+
     getAllTodo(){
         return httpCommon.get("/todo-list");
     }
@@ -19,6 +24,10 @@ class TodoDataService{
 
     deleteTodo(id){
         return httpCommon.delete(`/todo-list/${id}`)
+    }
+
+    deleteAllTodo(){
+        return httpCommon.delete("/todo-list");
     }
 }
 

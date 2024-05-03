@@ -3,6 +3,9 @@ module.exports = (app) => {
 
   var router = require("express").Router();
 
+  // Todo List with limit
+  router.get("/limit/:limit", todoList.findTodoLimit)
+
   // Todo List
   router.get("/", todoList.findTodo);
 
@@ -15,8 +18,11 @@ module.exports = (app) => {
   // Update a Todo with id
   router.put("/:id", todoList.updateTodo);
 
-  // Delete a Tutorial with id
+  // Delete a Todo with id
   router.delete("/:id", todoList.deleteTodo);
+
+  // Delete All Todos
+  router.delete("/", todoList.deleteAllTodo);
 
   app.use("/api/todo-list", router);
 };

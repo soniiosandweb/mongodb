@@ -1,12 +1,26 @@
 import { 
+    GET_TODO_LIMIT,
     GET_ALL_TODO,
     Add_TODO,
     GET_TODO,
     UPDATE_TODO,
-    DELETE_TODO
+    DELETE_TODO,
+    DELETE_ALL_TODOS
  } from './types';
 
 import TodoDataService from '../services/todo.service';
+
+export const getAllTodoLimitData = (limit) => async (dispatch) =>{
+    try{
+       const res = await TodoDataService.getTodoLimit(limit);
+       dispatch({
+        type : GET_TODO_LIMIT,
+        payload : res.data
+       })
+    } catch (error) {
+        console.log(error);
+    }
+}
 
 export const getAllTodoList = () => async (dispatch) => {
     try {
@@ -80,4 +94,17 @@ export const deleteTodoItem = (id) => async (dispatch) => {
         console.log(error)
     }
     
+}
+
+export const deleteAllTodosData = () => async (dispatch) => {
+    try {
+        const res = await TodoDataService.deleteAllTodo();
+        dispatch({
+            type : DELETE_ALL_TODOS,
+            payload: res.data
+        })
+        
+    } catch (error) {
+        console.log(error);
+    }
 }

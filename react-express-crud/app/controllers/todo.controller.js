@@ -2,6 +2,19 @@ const db = require("../models");
 const Todo = db.todo;
 const mongoose = require("mongoose");
 
+exports.findTodoLimit = (req, res) => {
+  const limit = req.params.limit;
+  Todo.find().limit(limit)
+  .then((data) => {
+    res.send(data);
+  })
+  .catch((err) => {
+    res.status(500).send({
+      message : err.message || "Some error occurred while retrieving Todos."
+    })
+  })
+}
+
 exports.findTodo = (req, res) => {
   Todo.find()
     .then((data) => {
@@ -10,7 +23,7 @@ exports.findTodo = (req, res) => {
     .catch((err) => {
       res.status(500).send({
         message:
-          err.message || "Some error occurred while retrieving tutorials.",
+          err.message || "Some error occurred while retrieving Todos.",
       });
     });
 };
@@ -50,13 +63,13 @@ exports.findOne = (req, res) => {
         res.send(data);
       } else {
         res.status(404).send({
-          message: `Cannot find Tutorial with id=${id}.`,
+          message: `Cannot find Todo with id=${id}.`,
         });
       }
     })
     .catch((err) => {
       res.status(500).send({
-        message: "Error retrieving Tutorial with id=" + id,
+        message: "Error retrieving Todo with id=" + id,
       });
     });
 };
@@ -102,17 +115,33 @@ exports.deleteTodo = (req, res) => {
     .then((num) => {
       if (num["deletedCount"] == 1) {
         res.send({
-          message: "Tutorial was deleted successfully!",
+          message: "Todo was deleted successfully!",
         });
       } else {
         res.send({
-          message: `Cannot delete Tutorial with id=${id}. Maybe Tutorial was not found!`,
+          message: `Cannot delete Todo with id=${id}. Maybe Todo was not found!`,
         });
       }
     })
     .catch((err) => {
       res.status(500).send({
-        message: "Could not delete Tutorial with id=" + id,
+        message: "Could not delete Todo with id=" + id,
       });
     });
 };
+
+// Delete All Todo
+exports.deleteAllTodo = (req, res) =>{
+  const filter = {};
+  Todo.deleteMany(filter)
+  .then((num) => {
+    res.send({
+      message: `${num} Todos was deleted successfully!`
+    })
+  })
+  .catch((err) => {
+    res.send(500).send({
+      message: "Some error occurred while removing all Todos."
+    })
+  })
+}

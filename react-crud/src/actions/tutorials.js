@@ -4,7 +4,8 @@ import {
     GET_TUTORIAL,
     UPDATE_TUTORIAL,
     DELETE_TUTORIAL,
-    DELETE_ALL_TUTORIALS
+    DELETE_ALL_TUTORIALS,
+    GET_TUTORIAL_LIMIT
 } from "./types";
 
 import TutorialDataService from '../services/tutorial.service';
@@ -20,6 +21,19 @@ export const createTutorial = (data) => async (dispatch) =>{
     }
     catch(err){
         return Promise.reject(err);
+    }
+}
+
+export const getTutorialsLimitData = (limit) => async (dispatch) => {
+    try{
+        const res = await TutorialDataService.getTutorialLimit(limit);
+        dispatch({
+            type: GET_TUTORIAL_LIMIT,
+            payload: res.data
+        })
+    }
+    catch(err){
+        console.log(err)
     }
 }
 

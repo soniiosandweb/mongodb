@@ -4,12 +4,14 @@ import {
     GET_TUTORIAL,
     UPDATE_TUTORIAL,
     DELETE_TUTORIAL,
-    DELETE_ALL_TUTORIALS
+    DELETE_ALL_TUTORIALS,
+    GET_TUTORIAL_LIMIT
 } from "../actions/types";
 
 const initialState = {
     tutorialItems: [],
-    tutorialData: []
+    tutorialData: [],
+    tutorialsLimit: []
 };
 
 function tutorialReducer(state = initialState, action){
@@ -20,6 +22,12 @@ function tutorialReducer(state = initialState, action){
             return {
                 ...state,
                 tutorialItems: [payload, ...state.tutorialItems]
+            }
+
+        case GET_TUTORIAL_LIMIT:
+            return {
+                ...state,
+                tutorialsLimit: payload
             }
 
         case RETRIEVE_TUTORIAL:

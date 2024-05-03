@@ -32,6 +32,20 @@ exports.create = (req, res) => {
     });
 };
 
+// Retrieve all Tutorials with limit
+exports.findTutorialLimit = (req,res) => {
+  const limit = req.params.limit;
+  Tutorial.find().limit(limit)
+  .then((data) => {
+    res.send(data);
+  })
+  .catch((err) => {
+    res.status(500).send({
+      message : err.message || "Some error occurred while retrieving Todos."
+    })
+  })
+}
+
 // Retrieve all Tutorials from the database.
 exports.find = (req, res) => {
   const title = req.query.title;

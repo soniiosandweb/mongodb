@@ -3,6 +3,9 @@ module.exports = (app) => {
 
   var router = require("express").Router();
 
+  // Get Tutorial with limit
+  router.get("/limit/:limit", tutorials.findTutorialLimit);
+
   // Create a new Tutorial
   router.post("/", tutorials.create);
 
