@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteAllTodosData, getAllTodoList } from '../actions/todo';
+import { deleteAllTodosData, filterPublishedTodo, filterTodoByTitle, getAllTodoList } from '../actions/todo';
 
 function TodosList(){
 
@@ -8,6 +8,8 @@ function TodosList(){
     const {todosItem} = useSelector((state) => state.todos);
     const [currentIndex, setCurrentIndex] = useState(-1);
     const [currentTodo, setCurrentTodo] = useState(null);
+    const [searchTitle, setSearchTitle] = useState('');
+    const [selected, setSelected] = useState('');
 
     const setActiveTodo = (todo, index) =>{
         if(currentIndex === index){
@@ -30,15 +32,88 @@ function TodosList(){
         })
     }
 
+    const findByTitle = () => {
+        dispatch(filterTodoByTitle(searchTitle)).then(response => {
+            // console.log(response);
+            setSelected('');
+            setCurrentIndex(-1);
+            setCurrentTodo(null);
+        })
+        .catch(err => {
+            console.log(err)
+        })
+    }
+
+    const filterPublishedData = (e) => {
+        setSelected(e.target.value);
+        dispatch(filterPublishedTodo(e.target.value)).then(response => {
+            setCurrentIndex(-1);
+            setCurrentTodo(null);
+            setSearchTitle('');
+        })
+        .catch(err => {
+            console.log(err)
+        })
+    }
+
+    const resetFilter = () => {
+        dispatch(getAllTodoList()).then(response =>{
+            setSelected('');
+            setSearchTitle('');
+            setCurrentIndex(-1);
+            setCurrentTodo(null);
+        })
+        .catch(err => {
+            console.log(err)
+        })
+    }
+
     useEffect(() => {
         dispatch(getAllTodoList())
     }, [dispatch]);
 
     return (
-        <div className='container mt-5'>
+        <div className='container'>
+
+            <div className="row">
+                <div className="col-md-8">
+                    <div className="input-group mb-3">
+                        <input
+                            type="text"
+                            className="form-control"
+                            placeholder="Search by title"
+                            value={searchTitle}
+                            id="search_title"
+                            onChange={(e) => setSearchTitle(e.target.value)}
+                        />
+                        <div className="input-group-append">
+                            <button
+                                className="btn btn-outline-secondary"
+                                type="button"
+                                onClick={() => findByTitle()}
+                            >
+                                Search
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <div className='row'>
                 <div className='col-md-6'>
-                    <h2>Todo List</h2>
+                    <div className="input-group justify-content-between mb-3">
+                        <h2>Todo List</h2>
+                        <select 
+                            className="form-control-sm rounded" 
+                            value={selected} 
+                            onChange={(e) => filterPublishedData(e)}
+                            id="filter_published"
+                        >
+                            <option value="">Select Filter</option>
+                            <option value="true">Published</option>
+                            <option value="false">Pending</option>
+                        </select>
+                    </div>
                     <ul className='list-group'>
                         {todosItem.length ?
                             todosItem.map((todo, index) => (
@@ -49,7 +124,8 @@ function TodosList(){
                         }
                     </ul>
 
-                    <button onClick={()=>deleteAllTodos()} className='btn btn-danger mt-3'>Delete All</button>
+                    <button onClick={()=>deleteAllTodos()} className='btn btn-danger btn-space mt-3'>Delete All</button>
+                    <button className="btn btn-secondary btn-space mt-3" onClick={() => resetFilter()}>Clear All Filter</button>
                 </div>
 
                 <div className="col-md-6">

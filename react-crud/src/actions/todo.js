@@ -108,3 +108,29 @@ export const deleteAllTodosData = () => async (dispatch) => {
         console.log(error);
     }
 }
+
+export const filterTodoByTitle = (title) => async (dispatch) => {
+    try{
+        const res = await TodoDataService.findByTodoTitle(title);
+        dispatch({
+            type : GET_ALL_TODO,
+            payload : res.data
+        })
+    }
+    catch(err){
+        console.log(err)
+    }
+}
+
+export const filterPublishedTodo = (value) => async (dispatch) => {
+    try {
+        const res = await TodoDataService.filterPublished(value);
+        dispatch({
+            type : GET_ALL_TODO,
+            payload : res.data
+        })
+    }
+    catch(err){
+        console.log(err)
+    }
+}

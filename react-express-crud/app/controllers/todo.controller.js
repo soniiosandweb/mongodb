@@ -16,7 +16,9 @@ exports.findTodoLimit = (req, res) => {
 }
 
 exports.findTodo = (req, res) => {
-  Todo.find()
+  const title = req.query.title;
+  var condition = title ? { title: new RegExp(title, "i") } : null;
+  Todo.find(condition)
     .then((data) => {
       res.send(data);
     })
@@ -145,3 +147,20 @@ exports.deleteAllTodo = (req, res) =>{
     })
   })
 }
+
+// find all published Todo
+exports.findAllPublished = (req, res) => {
+  const value = req.query.value;
+  var condition = value ? { published: value } : null;
+
+  Todo.find(condition)
+    .then((data) => {
+      res.send(data);
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message:
+          err.message || "Some error occurred while retrieving todos.",
+      });
+    });
+};

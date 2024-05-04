@@ -9,6 +9,9 @@ module.exports = (app) => {
   // Todo List
   router.get("/", todoList.findTodo);
 
+  // Retrieve all published Todos
+  router.get("/published", todoList.findAllPublished);
+
   // Add Todo
   router.post("/", todoList.addTodo);
 

@@ -29,6 +29,14 @@ class TodoDataService{
     deleteAllTodo(){
         return httpCommon.delete("/todo-list");
     }
+
+    findByTodoTitle(title){
+        return httpCommon.get(`/todo-list/?title=${title}`);
+    }
+
+    filterPublished(value){
+        return httpCommon.get(`/todo-list/published/?value=${value}`);
+    }
 }
 
 export default new TodoDataService();
