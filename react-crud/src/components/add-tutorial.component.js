@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { createTutorial } from "../actions/tutorials";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { getAllTodoList } from "../actions/todo";
 
 function AddTutorial(){
 
@@ -10,6 +11,8 @@ function AddTutorial(){
   const [description, setDescription] = useState("");
   const [published, setPublished] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+
+  const {todosItem} = useSelector((state) => state.todos)
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -52,6 +55,10 @@ function AddTutorial(){
 
   }
 
+  useEffect(()=>{
+    dispatch(getAllTodoList())
+  })
+
   return(
     <div className="submit-form">
       {submitted ? (
@@ -93,6 +100,16 @@ function AddTutorial(){
                 name="description"
               />
             </div>
+
+            <div className="form-group">
+              <label htmlFor="todo">Select Todo</label>
+              <select name="todo">
+                {todosItem.map((todo,index) => (
+                  <option value={todo.id}>{todo.title}</option>
+                ))}
+              </select>
+            </div>
+
             <div className="form-group">
               <button className="btn btn-success" type="submit">
                 Submit

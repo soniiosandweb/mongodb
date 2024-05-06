@@ -4,6 +4,7 @@ module.exports = (mongoose) => {
       title: String,
       description: String,
       published: Boolean,
+      todoId: String,
     },
     { timestamps: true },
     { collection: "tutorials" }
