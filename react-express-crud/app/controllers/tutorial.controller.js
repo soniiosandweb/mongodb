@@ -17,6 +17,7 @@ exports.create = (req, res) => {
     title: req.body.title,
     description: req.body.description,
     published: req.body.published ? req.body.published : false,
+    todoId: req.body.todoId
   };
 
   // Save Tutorial in the database

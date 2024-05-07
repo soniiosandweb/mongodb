@@ -107,8 +107,9 @@ function Tutorial(){
                             <strong>Status: </strong>{tutorialData.published ? "Published" : "Pending"}
                         </div>
                         <div className="form-group">
-                            <button type="button" className="btn btn-danger btn-space" onClick={() => deleteTutorialData(tutorialData.id)}>Delete</button>
                             <button type="submit" className="btn btn-primary btn-space" >Update</button>
+                            <button type="button" className="btn btn-danger btn-space" onClick={() => deleteTutorialData(tutorialData.id)}>Delete</button>
+                            
                             {tutorialData.published ? 
                                 (
                                     <button type="button" className="btn btn-secondary btn-space" onClick={() => publishTutorial(false)}>UnPublish</button>

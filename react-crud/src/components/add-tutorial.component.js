@@ -9,6 +9,7 @@ function AddTutorial(){
   const [id, setId] = useState(null);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
+  const [todoId, setTodoId] = useState("");
   const [published, setPublished] = useState(false);
   const [submitted, setSubmitted] = useState(false);
 
@@ -25,6 +26,10 @@ function AddTutorial(){
     setDescription(e.target.value)
   }
 
+  const changeTodoId = (e) => {
+    setTodoId(e.target.value)
+  }
+
   const newTutorial = () => {
     setId(null);
     setTitle("");
@@ -38,7 +43,8 @@ function AddTutorial(){
 
     var data = {
       title: title,
-      description: description
+      description: description,
+      todoId: todoId
     }
 
     dispatch(createTutorial(data)).then(response => {
@@ -102,10 +108,18 @@ function AddTutorial(){
             </div>
 
             <div className="form-group">
-              <label htmlFor="todo">Select Todo</label>
-              <select name="todo">
+              <label htmlFor="todo">Select Todo:</label>
+              <select 
+                name="todo"
+                className="form-control"
+                id="todo"
+                required
+                value={todoId}
+                onChange={changeTodoId}
+              >
+                <option value="">Select Todo Item..</option>
                 {todosItem.map((todo,index) => (
-                  <option value={todo.id}>{todo.title}</option>
+                  <option value={todo.id} key={index}>{todo.title}</option>
                 ))}
               </select>
             </div>
